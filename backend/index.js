@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
+import noteRoutes from './router/note.route.js';
+
 dotenv.config();
 
 const app = express();
@@ -16,6 +18,10 @@ try {
     console.log("error to connect database", error);
 }
 
+//routing
+app.use("/api/V1/noteapp", noteRoutes);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
