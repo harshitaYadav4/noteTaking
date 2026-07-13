@@ -19,6 +19,7 @@ try {
 }
 
 //routing
+app.use(express.json());
 app.use("/api/V1/noteapp", noteRoutes);
 
 app.listen(port, () => {
