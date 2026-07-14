@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 import noteRoutes from './router/note.route.js';
 
@@ -21,6 +22,7 @@ try {
 //routing
 app.use(express.json());
 app.use("/api/V1/noteapp", noteRoutes);
+app.use(cors());
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
