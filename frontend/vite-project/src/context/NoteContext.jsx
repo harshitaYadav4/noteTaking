@@ -1,9 +1,7 @@
-import { Children } from "react";
-import { createContext } from "react";
+import { createContext ,useEffect ,useState} from "react";
 import Backend_URL from "../api/url";
-import { use } from "react";
 
-const NoteContext = createContext();  
+export const NoteContext = createContext();  
 
 export const NoteProvider = ({children}) => {
     
@@ -30,19 +28,25 @@ useEffect(() => {
 const createNote = async (note) => {
     const res = await Backend_URL.post("/create", note);
     setNotes([ res.data,...notes]);
-
 }   
 
 //update a note
-const updateNote = async (id, note) => {}   
+const updateNote = async (id, updateNote) => {
+    const res = await Backend_URL.put(`/update/${id}`, updateNote);
+    setNotes(notes.map((note) => (note._id === id ? res.data : note)));
+
+}   
 
 //delete a note
-const deleteNote = async (id) => {}
+const deleteNote = async (id) => {
+    await Backend_URL.delete(`/delete/${id}`);
+    setNotes(notes.filter((note) => note._id !== id));
+}
 
 
 return (
     <NoteContext.Provider value={{ notes, loading, createNote, updateNote, deleteNote }}>
-    <children />
+    {children}
     </NoteContext.Provider>
 )
 }
